@@ -11,9 +11,6 @@ class Tests
         $size =  count($levels);
         // get the earlier lower reading
 
-
-
-
         echo $inputArray;
     }
 
