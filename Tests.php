@@ -42,7 +42,7 @@ class Tests
 
 
         $text = "how now bow cow";
-        $ggg = substr_replace("/$XXXX", "$YYY", $text);
+//        $ggg = substr_replace("/$XXXX", "$YYY", $text);
 
         $merge_array = [$a, $b];
         $array = [];
@@ -283,7 +283,7 @@ class Tests
     public function calcAverage($no1,$no2,$no3,$no4,$no5){
         $average = 0;
         $build =array($no1,$no2,$no3,$no4,$no5);
-        sort($build);
+        rsort($build,);
         $valid = true;
         $arrAverage = [];
         foreach($build as $b){
@@ -299,15 +299,209 @@ class Tests
             }
         }
         if($valid){
-            for ($i = 4; $i >= 2 ;$i--) {
+            for ($i = 0; $i <= 2 ;$i++) {
                 $arrAverage[] = $build[$i];
             }
-            $average = array_sum($arrAverage) / 3;
+            $average = ceil(array_sum($arrAverage) / 3);
         }
         return $average;
 
 
     }
 
+    public function getHighest(){
+        $items = array(1, 44, 5, 6, 68, 9);
+        $max = 0;
+        foreach($items as $item) {
+            $max = ($max < $item)?$item:$max;
+        }
+        echo $max;
+    }
 
+
+//$animal = array('type' => 'dog', 'name' => 'Max');
+//$b = (object) $animal;
+//$ggg = "";
+
+
+//$str = "fdff,12,rrf,25,trdf,25,rfrr,tr";
+//$words = explode(',',$str);
+//$arrWords = [];
+//$arrDigits = [];
+//foreach($words as $objWordOrDigit)
+//{
+//    $isDigit =   $isDigit = preg_match('/[0-9]/', $objWordOrDigit);
+//    if($isDigit)
+//    {
+//        array_push($arrDigits,$objWordOrDigit);
+//    }
+//    else{
+//        array_push($arrWords,$objWordOrDigit);
+//    }
+//
+//}
+//$words =implode('|', array_filter($arrWords));
+//$digits = implode('|',array_filter($arrDigits));
+//$line = $words.$digits;
+//$ggg = 0;
+//public static function isDigit($digitOrString) {
+//    $isDigit = preg_match('/[0-9]/', $digitOrString);
+//    var_dump($isDigit);
+//}
+
+
+    public function LongestWord($sen) {
+
+        $longest_word = "";
+        foreach (explode(" ",$sen) as $words){
+            $words = preg_replace('/[^A-Za-z0-9\-]/', '', $words);
+            if(strlen($words) > strlen($longest_word)){
+                $longest_word = $words;
+                $sen = $longest_word;
+            }
+        }
+
+        // code goes here
+        return $sen;
+
+    }
+
+    public function moves($a){
+//        $ggg = [1,2,3,'a',null,[],(),];
+//        $ggg = count($ggg);
+        $smallest = 0;
+        $count = 0;
+        $count_r = 0;
+        $result = [];
+//        foreach ($a as $moves){
+//            if(($smallest+1) == $moves){
+//                $count++;
+//                $smallest = $moves;
+//                $result[]=$count;
+//            }
+//        }
+        $arr = array_reverse($a);
+        foreach ($a as $moves){
+            if(($smallest+1) == $moves){
+                $count++;
+                $smallest = $moves;
+                $result[]=$count;
+            }
+        }
+
+        if($count > 1000000000){
+            $count = -1;
+        }
+        return $count;
+    }
+    function getNumberOfMovies($substr) {
+        $ggg = $substr;
+        /*
+         * Endpoint: "https://jsonmock.hackerrank.com/api/movies/search/?Title=substr"
+         */
+        $total = 0;
+        try {
+            $url = 'https://jsonmock.hackerrank.com/api/movies/search/?Title='.$substr;
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            $data = curl_exec($curl);
+            curl_close($curl);
+            $data = json_decode($data,true);
+            $total = $data['total'];
+            return $total;
+
+        }
+        catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+    }
+
+    function determineisPower($arr)
+    {
+        $arrPow = [];
+        foreach ($arr as $n) {
+            if (($n > 0) && (($n & ($n - 1)) == 0)){
+                $arrPow[] =  1;
+            }
+            else{
+                $arrPow[] =  0;
+            }
+
+        }
+        return $arrPow;
+
+    }
+
+    function runningSum($arr){
+        $arr = [10,-5,4,-2,3,1,-1,-6,-1,0,5];
+        $x = count($arr);
+        foreach ($arr as $n){
+            $x += $n;
+            $sum = $x ;
+            if($sum < 0){
+                break;
+            }
+        }
+        return $sum;
+
+
+    }
+    function intergerFlor(){
+        $a = 1.1;
+        $b = 3.89;
+        $num = (integer)(round(floor($a + $b),0));
+
+    }
+    function determinaAnagrams() {
+        // Write your code here
+        $a = "fcrxzwscanmligyxyvym";
+        $b = "jxwtrhvujlmrpdoqbisbwhmgpmeoke";
+        $arrayStringB = str_split($b);
+        $arrayStringA = str_split($a);
+        $removed_chars = 0;
+        foreach ($arrayStringA as $str){
+            $key = array_search($str,$arrayStringB);
+            if($key !== false){
+                unset($arrayStringB[$key]);
+            }
+            else{
+                $removed_chars += 1;
+            }
+        }
+        $removed_chars += count($arrayStringB);
+        return $removed_chars;
+
+    }
+
+    function soldiers(){
+        $arr = [4,4,3,3,1,0];
+        $count =0;
+        foreach($arr as $value){
+            if(in_array($value+1, $arr)){
+                $count ++;
+            }
+        }
+        return $count;
+    }
+
+    function alternatingCharacters($s) {
+        // Write your code here
+        $s = "ABABABAB";
+
+        $deletion = 0;
+        $reg = "";
+
+        for($x = 0; $x < strlen($s); $x ++){
+            if($reg == $s[$x]){
+                $deletion ++;
+            }
+            else{
+                $reg = $s[$x];
+            }
+        }
+        return $deletion;
+    }
 }
