@@ -595,4 +595,38 @@ class Tests
         }
         return $total;
     }
+    function cleanString(){
+        $url = "https://coderbyte.com/api/challenges/json/json-cleaning";
+        $cleaned = "";
+        try {
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HEADER, false);
+            $data = curl_exec($curl);
+            curl_close($curl);
+            $arrData = json_decode($data,true);
+            foreach ($arrData as $index => $data){
+                if(is_array($data)){
+                    foreach ($data as $val){
+                        if(empty($val) or ($val == "N/A") or ($val=="-")){
+                            $key = array_search($val,$data);
+                            unset($arrData[$index][$key]);
+                        }
+                    }
+                }
+                else{
+                    if(empty($data) or ($data == "N/A") or ($data=="-")){
+                        $key = array_search($data,$arrData);
+                        unset($arrData[$key]);
+                    }
+                }
+            }
+            return $arrData;
+        }
+        catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
 }

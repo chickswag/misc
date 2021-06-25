@@ -57,4 +57,5 @@ $string = "fun&!! time";
 //$test->alternatingCharacters("hhh");
 //$test->isValidString();
 //$test->QuestionsMarks();
-$test->FirstFactorial();
+//$test->FirstFactorial();
+$test->cleanString();
