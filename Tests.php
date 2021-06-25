@@ -257,26 +257,17 @@ class Tests
     }
 
     public function findIntersection($string_array){
-
+        $strArr =  array("1, 2, 3, 4, 5", "6, 7, 8, 9, 10");
         $arrInter = [];
-        $arr1 = explode(', ', $string_array[0]);
-        $arr2 = explode(', ', $string_array[1]);
-        $count = 0;
-        foreach($arr1 as $index =>$new_str){
-            foreach ($arr2 as $arr){
-                if($new_str == $arr){
-                    $arrInter[] = $arr;
-                    $count = 1;
-                    break;
-                }
+        $arr1 = explode(', ', $strArr[0]);
+        $arr2 = explode(', ', $strArr[1]);
+        $outcome = "false";
+        foreach($arr1 as $new_str){
+            if(in_array($new_str,$arr2)){
+                $arrInter[] = $new_str;
             }
         }
-        if($count == 0){
-            $strArrWorked = false;
-        }
-        else{
-            $strArrWorked = implode(",",$arrInter);
-        }
+        $strArrWorked =(count($arrInter) > 0) ? $outcome : implode(",",$arrInter);
         return $strArrWorked;
     }
 
@@ -351,24 +342,31 @@ class Tests
 
 
     public function LongestWord($sen) {
-
+//        $sen = "this is some sort of sentence";
+        $sen = "123456789 98765432";
         $longest_word = "";
+        $word_and_length = [];
+        $word_count =0;
         foreach (explode(" ",$sen) as $words){
-            $words = preg_replace('/[^A-Za-z0-9\-]/', '', $words);
-            if(strlen($words) > strlen($longest_word)){
-                $longest_word = $words;
-                $sen = $longest_word;
+            $string = preg_replace('/[^A-Za-z0-9]+/', '', $words);
+            $word_and_length[$string]=strlen($string);
+        }
+        $long = 0;
+        foreach ($word_and_length as $word){
+            if($word > $long){
+                $long = $word;
+                $longest_word = array_search($long,$word_and_length);
+            }
+            elseif($word == $long){
+                $longest_word = array_search($long,$word_and_length);
             }
         }
-
-        // code goes here
-        return $sen;
+        return $longest_word;
 
     }
 
     public function moves($a){
-//        $ggg = [1,2,3,'a',null,[],(),];
-//        $ggg = count($ggg);
+
         $smallest = 0;
         $count = 0;
         $count_r = 0;
@@ -503,5 +501,83 @@ class Tests
             }
         }
         return $deletion;
+    }
+
+
+    function isValidString(){
+//        $str = "aabbcd";//no
+        $str = "abcdefghhgfedecba";//yes
+        $strBuild = [];
+
+        $count =0 ;
+        foreach (str_split($str) as $letter){
+            if(array_key_exists($letter,$strBuild)){
+                $strBuild[$letter] += 1;
+            }
+            else{
+                $strBuild[$letter] = 1;
+            }
+        }
+        if(count(array_unique($strBuild)) === 1){
+            $response = "YES";
+        }
+        else{
+            $strBuild = array_values($strBuild);
+            $current = 0;
+            $reduced  = False;
+            for ($x = 0 ;$x < count($strBuild); $x++){
+                if($x == 0){
+                    $current = $strBuild[$x];
+                }
+                else{
+                    if(($x > 0) && $current == $strBuild[$x] ){
+                        $response = "YES";
+                    }
+                    else{
+                        $value = $strBuild[$x] - 1;
+                        if($value == 0){
+                            unset($strBuild[$x]);
+                        }
+                        else{
+                            if(in_array($value,$strBuild))
+                            {
+                                $strBuild[$x] = $value;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        $response = (count(array_unique($strBuild)) === 1) ? "YES" : "NO";
+        return $response;
+    }
+
+    function QuestionsMarks(){
+//        $str = "9???1???9??1???9"; //false
+        $str = "9???1???9??1???9"; // false
+//        $str = "acc?7??sss?3rr1??????5";//true
+//        $str = "9???1???9??1???9";//false
+
+        $count_q_mark = 0;
+        $response = "false";
+        $last_digit = 0;
+        foreach(str_split($str) as $value){
+            switch ($value){
+                case is_numeric($value):
+                    if($last_digit + $value == 10){
+                      $response = ($count_q_mark != 3) ? "false" : "true";
+                    }
+                    $last_digit = $value;
+                    $count_q_mark = 0;
+
+                   break;
+                case $value == "?":
+                    $count_q_mark ++;
+                    break;
+            }
+
+        }
+        return $response;
     }
 }
