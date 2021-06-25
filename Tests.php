@@ -566,11 +566,15 @@ class Tests
             switch ($value){
                 case is_numeric($value):
                     if($last_digit + $value == 10){
-                      $response = ($count_q_mark != 3) ? "false" : "true";
+                      if($count_q_mark != 3){
+                          return "false";
+                      }
+                      else{
+                          $response = "true";
+                      }
                     }
                     $last_digit = $value;
                     $count_q_mark = 0;
-
                    break;
                 case $value == "?":
                     $count_q_mark ++;
@@ -579,5 +583,16 @@ class Tests
 
         }
         return $response;
+    }
+
+    function FirstFactorial(){
+        $sum = 8;
+        $total = 0;
+        $count = 1;
+        for($x = 1 ;$x <= $sum; $x ++){
+            $count = ($count * $x);
+            $total = $count;
+        }
+        return $total;
     }
 }

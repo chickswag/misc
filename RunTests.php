@@ -56,4 +56,5 @@ $string = "fun&!! time";
 ////$test->soldiers();
 //$test->alternatingCharacters("hhh");
 //$test->isValidString();
-$test->QuestionsMarks();
+//$test->QuestionsMarks();
+$test->FirstFactorial();
