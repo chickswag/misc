@@ -58,4 +58,7 @@ $string = "fun&!! time";
 //$test->isValidString();
 //$test->QuestionsMarks();
 //$test->FirstFactorial();
-$test->cleanString();
+//$test->cleanString();
+//$test->charlie();
+//$test->StringReduction();
+$test->cutOff();

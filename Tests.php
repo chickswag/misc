@@ -196,7 +196,7 @@ class Tests
     {
         $reversed = "";
         $strChars = strlen($string_reverse);
-        for ($i = strlen($string_reverse); $i>=0; $i--) {
+        for ($i = strlen($string_reverse); $i >= 0; $i--) {
             $reversed .= $string_reverse[$i];
         }
         return $reversed;
@@ -228,6 +228,8 @@ class Tests
 
     public function generatePassword($a, $b)
     {
+        $a = "abc";
+        $b = "def";
         $new_password = "";
         $first_array = str_split($a);
         $second_array = str_split($b);
@@ -235,6 +237,12 @@ class Tests
             $new_password .= $new;
             if ($second_array[$index]) {
                 $new_password .= $second_array[$index];
+                unset($second_array[$index]);
+            }
+        }
+        if (count($second_array) > 0) {
+            foreach ($second_array as $value) {
+                $new_password .= $value;
             }
         }
         return $new_password;
@@ -256,41 +264,42 @@ class Tests
         return $found;
     }
 
-    public function findIntersection($string_array){
-        $strArr =  array("1, 2, 3, 4, 5", "6, 7, 8, 9, 10");
+    public function findIntersection($string_array)
+    {
+        $strArr = array("1, 2, 3, 4, 5", "6, 7, 8, 9, 10");
         $arrInter = [];
         $arr1 = explode(', ', $strArr[0]);
         $arr2 = explode(', ', $strArr[1]);
         $outcome = "false";
-        foreach($arr1 as $new_str){
-            if(in_array($new_str,$arr2)){
+        foreach ($arr1 as $new_str) {
+            if (in_array($new_str, $arr2)) {
                 $arrInter[] = $new_str;
             }
         }
-        $strArrWorked =(count($arrInter) > 0) ? $outcome : implode(",",$arrInter);
+        $strArrWorked = (count($arrInter) > 0) ? $outcome : implode(",", $arrInter);
         return $strArrWorked;
     }
 
-    public function calcAverage($no1,$no2,$no3,$no4,$no5){
+    public function calcAverage($no1, $no2, $no3, $no4, $no5)
+    {
         $average = 0;
-        $build =array($no1,$no2,$no3,$no4,$no5);
+        $build = array($no1, $no2, $no3, $no4, $no5);
         rsort($build,);
         $valid = true;
         $arrAverage = [];
-        foreach($build as $b){
-            if($b > 100) {
+        foreach ($build as $b) {
+            if ($b > 100) {
                 $average = -2;
                 $valid = false;
                 break;
-            }
-            elseif($b < 0){
+            } elseif ($b < 0) {
                 $average = -1;
                 $valid = false;
                 break;
             }
         }
-        if($valid){
-            for ($i = 0; $i <= 2 ;$i++) {
+        if ($valid) {
+            for ($i = 0; $i <= 2; $i++) {
                 $arrAverage[] = $build[$i];
             }
             $average = ceil(array_sum($arrAverage) / 3);
@@ -300,11 +309,12 @@ class Tests
 
     }
 
-    public function getHighest(){
+    public function getHighest()
+    {
         $items = array(1, 44, 5, 6, 68, 9);
         $max = 0;
-        foreach($items as $item) {
-            $max = ($max < $item)?$item:$max;
+        foreach ($items as $item) {
+            $max = ($max < $item) ? $item : $max;
         }
         echo $max;
     }
@@ -341,31 +351,32 @@ class Tests
 //}
 
 
-    public function LongestWord($sen) {
+    public function LongestWord($sen)
+    {
 //        $sen = "this is some sort of sentence";
         $sen = "123456789 98765432";
         $longest_word = "";
         $word_and_length = [];
-        $word_count =0;
-        foreach (explode(" ",$sen) as $words){
+        $word_count = 0;
+        foreach (explode(" ", $sen) as $words) {
             $string = preg_replace('/[^A-Za-z0-9]+/', '', $words);
-            $word_and_length[$string]=strlen($string);
+            $word_and_length[$string] = strlen($string);
         }
         $long = 0;
-        foreach ($word_and_length as $word){
-            if($word > $long){
+        foreach ($word_and_length as $word) {
+            if ($word > $long) {
                 $long = $word;
-                $longest_word = array_search($long,$word_and_length);
-            }
-            elseif($word == $long){
-                $longest_word = array_search($long,$word_and_length);
+                $longest_word = array_search($long, $word_and_length);
+            } elseif ($word == $long) {
+                $longest_word = array_search($long, $word_and_length);
             }
         }
         return $longest_word;
 
     }
 
-    public function moves($a){
+    public function moves($a)
+    {
 
         $smallest = 0;
         $count = 0;
@@ -379,39 +390,40 @@ class Tests
 //            }
 //        }
         $arr = array_reverse($a);
-        foreach ($a as $moves){
-            if(($smallest+1) == $moves){
+        foreach ($a as $moves) {
+            if (($smallest + 1) == $moves) {
                 $count++;
                 $smallest = $moves;
-                $result[]=$count;
+                $result[] = $count;
             }
         }
 
-        if($count > 1000000000){
+        if ($count > 1000000000) {
             $count = -1;
         }
         return $count;
     }
-    function getNumberOfMovies($substr) {
+
+    function getNumberOfMovies($substr)
+    {
         $ggg = $substr;
         /*
          * Endpoint: "https://jsonmock.hackerrank.com/api/movies/search/?Title=substr"
          */
         $total = 0;
         try {
-            $url = 'https://jsonmock.hackerrank.com/api/movies/search/?Title='.$substr;
+            $url = 'https://jsonmock.hackerrank.com/api/movies/search/?Title=' . $substr;
             $curl = curl_init();
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curl, CURLOPT_HEADER, false);
             $data = curl_exec($curl);
             curl_close($curl);
-            $data = json_decode($data,true);
+            $data = json_decode($data, true);
             $total = $data['total'];
             return $total;
 
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $e->getMessage();
         }
 
@@ -421,11 +433,10 @@ class Tests
     {
         $arrPow = [];
         foreach ($arr as $n) {
-            if (($n > 0) && (($n & ($n - 1)) == 0)){
-                $arrPow[] =  1;
-            }
-            else{
-                $arrPow[] =  0;
+            if (($n > 0) && (($n & ($n - 1)) == 0)) {
+                $arrPow[] = 1;
+            } else {
+                $arrPow[] = 0;
             }
 
         }
@@ -433,13 +444,14 @@ class Tests
 
     }
 
-    function runningSum($arr){
-        $arr = [10,-5,4,-2,3,1,-1,-6,-1,0,5];
+    function runningSum($arr)
+    {
+        $arr = [10, -5, 4, -2, 3, 1, -1, -6, -1, 0, 5];
         $x = count($arr);
-        foreach ($arr as $n){
+        foreach ($arr as $n) {
             $x += $n;
-            $sum = $x ;
-            if($sum < 0){
+            $sum = $x;
+            if ($sum < 0) {
                 break;
             }
         }
@@ -447,25 +459,28 @@ class Tests
 
 
     }
-    function intergerFlor(){
+
+    function intergerFlor()
+    {
         $a = 1.1;
         $b = 3.89;
-        $num = (integer)(round(floor($a + $b),0));
+        $num = (integer)(round(floor($a + $b), 0));
 
     }
-    function determinaAnagrams() {
+
+    function determinaAnagrams()
+    {
         // Write your code here
         $a = "fcrxzwscanmligyxyvym";
         $b = "jxwtrhvujlmrpdoqbisbwhmgpmeoke";
         $arrayStringB = str_split($b);
         $arrayStringA = str_split($a);
         $removed_chars = 0;
-        foreach ($arrayStringA as $str){
-            $key = array_search($str,$arrayStringB);
-            if($key !== false){
+        foreach ($arrayStringA as $str) {
+            $key = array_search($str, $arrayStringB);
+            if ($key !== false) {
                 unset($arrayStringB[$key]);
-            }
-            else{
+            } else {
                 $removed_chars += 1;
             }
         }
@@ -474,29 +489,30 @@ class Tests
 
     }
 
-    function soldiers(){
-        $arr = [4,4,3,3,1,0];
-        $count =0;
-        foreach($arr as $value){
-            if(in_array($value+1, $arr)){
-                $count ++;
+    function soldiers()
+    {
+        $arr = [4, 4, 3, 3, 1, 0];
+        $count = 0;
+        foreach ($arr as $value) {
+            if (in_array($value + 1, $arr)) {
+                $count++;
             }
         }
         return $count;
     }
 
-    function alternatingCharacters($s) {
+    function alternatingCharacters($s)
+    {
         // Write your code here
         $s = "ABABABAB";
 
         $deletion = 0;
         $reg = "";
 
-        for($x = 0; $x < strlen($s); $x ++){
-            if($reg == $s[$x]){
-                $deletion ++;
-            }
-            else{
+        for ($x = 0; $x < strlen($s); $x++) {
+            if ($reg == $s[$x]) {
+                $deletion++;
+            } else {
                 $reg = $s[$x];
             }
         }
@@ -504,43 +520,38 @@ class Tests
     }
 
 
-    function isValidString(){
+    function isValidString()
+    {
 //        $str = "aabbcd";//no
         $str = "abcdefghhgfedecba";//yes
         $strBuild = [];
 
-        $count =0 ;
-        foreach (str_split($str) as $letter){
-            if(array_key_exists($letter,$strBuild)){
+        $count = 0;
+        foreach (str_split($str) as $letter) {
+            if (array_key_exists($letter, $strBuild)) {
                 $strBuild[$letter] += 1;
-            }
-            else{
+            } else {
                 $strBuild[$letter] = 1;
             }
         }
-        if(count(array_unique($strBuild)) === 1){
+        if (count(array_unique($strBuild)) === 1) {
             $response = "YES";
-        }
-        else{
+        } else {
             $strBuild = array_values($strBuild);
             $current = 0;
-            $reduced  = False;
-            for ($x = 0 ;$x < count($strBuild); $x++){
-                if($x == 0){
+            $reduced = False;
+            for ($x = 0; $x < count($strBuild); $x++) {
+                if ($x == 0) {
                     $current = $strBuild[$x];
-                }
-                else{
-                    if(($x > 0) && $current == $strBuild[$x] ){
+                } else {
+                    if (($x > 0) && $current == $strBuild[$x]) {
                         $response = "YES";
-                    }
-                    else{
+                    } else {
                         $value = $strBuild[$x] - 1;
-                        if($value == 0){
+                        if ($value == 0) {
                             unset($strBuild[$x]);
-                        }
-                        else{
-                            if(in_array($value,$strBuild))
-                            {
+                        } else {
+                            if (in_array($value, $strBuild)) {
                                 $strBuild[$x] = $value;
                             }
                         }
@@ -553,7 +564,8 @@ class Tests
         return $response;
     }
 
-    function QuestionsMarks(){
+    function QuestionsMarks()
+    {
 //        $str = "9???1???9??1???9"; //false
         $str = "9???1???9??1???9"; // false
 //        $str = "acc?7??sss?3rr1??????5";//true
@@ -562,22 +574,21 @@ class Tests
         $count_q_mark = 0;
         $response = "false";
         $last_digit = 0;
-        foreach(str_split($str) as $value){
-            switch ($value){
+        foreach (str_split($str) as $value) {
+            switch ($value) {
                 case is_numeric($value):
-                    if($last_digit + $value == 10){
-                      if($count_q_mark != 3){
-                          return "false";
-                      }
-                      else{
-                          $response = "true";
-                      }
+                    if ($last_digit + $value == 10) {
+                        if ($count_q_mark != 3) {
+                            return "false";
+                        } else {
+                            $response = "true";
+                        }
                     }
                     $last_digit = $value;
                     $count_q_mark = 0;
-                   break;
+                    break;
                 case $value == "?":
-                    $count_q_mark ++;
+                    $count_q_mark++;
                     break;
             }
 
@@ -585,17 +596,24 @@ class Tests
         return $response;
     }
 
-    function FirstFactorial(){
+    function FirstFactorial()
+    {
         $sum = 8;
         $total = 0;
         $count = 1;
-        for($x = 1 ;$x <= $sum; $x ++){
+        for ($x = 1; $x <= $sum; $x++) {
             $count = ($count * $x);
             $total = $count;
         }
         return $total;
     }
-    function cleanString(){
+
+    function cleanString()
+    {
+        $foo = 10;
+        $bar = (boolean)$foo;
+        echo $bar;
+
         $url = "https://coderbyte.com/api/challenges/json/json-cleaning";
         $cleaned = "";
         try {
@@ -605,28 +623,127 @@ class Tests
             curl_setopt($curl, CURLOPT_HEADER, false);
             $data = curl_exec($curl);
             curl_close($curl);
-            $arrData = json_decode($data,true);
-            foreach ($arrData as $index => $data){
-                if(is_array($data)){
-                    foreach ($data as $val){
-                        if(empty($val) or ($val == "N/A") or ($val=="-")){
-                            $key = array_search($val,$data);
+            $arrData = json_decode($data, true);
+            foreach ($arrData as $index => $data) {
+                if (is_array($data)) {
+                    foreach ($data as $val) {
+                        if (empty($val) or ($val == "N/A") or ($val == "-")) {
+                            $key = array_search($val, $data);
                             unset($arrData[$index][$key]);
                         }
                     }
-                }
-                else{
-                    if(empty($data) or ($data == "N/A") or ($data=="-")){
-                        $key = array_search($data,$arrData);
+                } else {
+                    if (empty($data) or ($data == "N/A") or ($data == "-")) {
+                        $key = array_search($data, $arrData);
                         unset($arrData[$key]);
                     }
                 }
             }
             return $arrData;
-        }
-        catch (Exception $e) {
+        } catch (Exception $e) {
             return $e->getMessage();
         }
     }
 
+    function foo()
+    {
+
+        $str = "abcabc";
+        $letters = str_split($str);
+        for ($x = 0; $x <= count($letters); $x++) {
+            if (($letters[$x] == "a" and $letters[$x + 1] == "b") or ($letters[$x] == "b" and $letters[$x + 1] == "a")) {
+                $gggg = "";
+            }
+
+        }
+    }
+
+
+    function charlie()
+    {
+        $strArr = ["OOOO", "OOFF", "OCHO", "OFOO"];
+        $found = 0;
+        foreach ($strArr as $key => $arr) {
+            $inner_array = str_split($arr);
+            if (!in_array("F", $inner_array) and
+                !in_array("C", $inner_array) and
+                !in_array("H", $inner_array)) {
+                unset($strArr[$key]);
+                continue;
+            }
+
+            foreach ($inner_array as $var) {
+                if ($var == "O") {
+                    $found++;
+                }
+            }
+        }
+    }
+
+    function StringReduction()
+    {
+        $str = "abcabc";
+        $string = str_split($str);
+        $letter = 0;
+        $response = 0;
+        $loop = True;
+        while ($loop) {
+            switch ($string[$letter] . $string[$letter + 1]) {
+                case 'ab':
+                case 'ba':
+                    array_splice($string, $letter, 2, 'c');
+                    $letter = 0;
+                    break;
+                case 'ac' :
+                case 'ca':
+                    array_splice($string, $letter, 2, 'b');
+                    $letter = 0;
+                    break;
+                case 'bc' :
+                case 'cb':
+                    array_splice($string, $letter, 2, 'a');
+                    $letter = 0;
+                    break;
+                default:
+                    $letter++;
+            }
+
+            if (count(array_unique($string)) === 1) {
+                $response = count($string);
+                $loop = False;
+            }
+        }
+        return $response;
+    }
+
+    function cutOff()
+    {
+        $lengths = [1, 1, 3, 4];
+        $rods = [];
+        $min_key = min($lengths);
+        array_push($rods, $min_key);
+        $index = 0;
+        foreach ($lengths as $length) {
+            if ($length > 1) {
+                $new_value = $length - $min_key;
+                array_push($rods, $new_value);
+                $lengths[$index] = $new_value;
+            } else {
+                unset($lengths[$index]);
+                $lengths = array_values($lengths);
+            }
+
+        }
+        foreach ($lengths as $l) {
+            if ($l > count($lengths)) {
+                $new_value = $l - count($lengths);
+                array_push($rods, $new_value);
+                $lengths[$index] = $new_value;
+                unset($lengths[$index]);
+                $lengths = array_values($lengths);
+            }
+        }
+        return $rods;
+
+    }
 }
