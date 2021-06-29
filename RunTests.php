@@ -61,4 +61,5 @@ $string = "fun&!! time";
 //$test->cleanString();
 //$test->charlie();
 //$test->StringReduction();
-$test->cutOff();
+//$test->cutOff();
+$test->countingStrings();

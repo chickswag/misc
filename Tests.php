@@ -746,4 +746,20 @@ class Tests
         return $rods;
 
     }
+
+    public function countingStrings(){
+        $s = "aba";
+        $n = 10;
+        $letter_count_a = substr_count($s,"a");
+        $char_length = strlen($s);
+        $total = (int)($n / $char_length);
+        $remainder = $n % $char_length;
+        $count =  $letter_count_a * $total;
+        for($i = 0; $i < $remainder; $i++){
+            if($s[$i] == "a") {
+                $count++;
+            }
+        }
+        return $count;
+    }
 }
