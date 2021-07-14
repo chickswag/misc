@@ -762,4 +762,39 @@ class Tests
         }
         return $count;
     }
+
+    function generateLottoNumbers(){
+
+        $total = 5;
+        $processed= "";
+        $ball_set = 5;
+        $total_pool_numbers = 50; //powerball
+        $exclude_bonus = true;
+        do {
+            $generatedNumber = [];
+            $count = 0;
+            for($x = 0; $x<=$ball_set; $x++){
+                if ($count < $ball_set){
+                    $rand_numbers = rand(1 , $total_pool_numbers);
+                    while(in_array($rand_numbers,$generatedNumber)){
+                        $rand_numbers = rand(1 , $total_pool_numbers);
+                    }
+                    if(!in_array($rand_numbers,$generatedNumber)){
+                        array_push($generatedNumber,$rand_numbers);
+                        $count ++;
+                    }
+                }
+                else{
+                    sort($generatedNumber);
+                    $bonus = rand(1,20);
+                    array_push($generatedNumber,$bonus);
+                    $count ++;
+                }
+            }
+            $processed  .= implode(" - ",$generatedNumber). "\r\n";
+            $total --;
+        }
+        while($total !== 0);
+        echo $processed;
+    }
 }

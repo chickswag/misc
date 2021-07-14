@@ -62,4 +62,5 @@ $string = "fun&!! time";
 //$test->charlie();
 //$test->StringReduction();
 //$test->cutOff();
-$test->countingStrings();
+//$test->countingStrings();
+$test->generateLottoNumbers();
