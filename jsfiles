@@ -1,0 +1,171 @@
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-exercises',
+  imports: [],
+  templateUrl: './exercises.component.html',
+  styleUrl: './exercises.component.css'
+})
+export class ExercisesComponent {
+
+  // sortAc = [8, 3, 5, 6, 2, 1]
+  // strReverse = "12345"
+  //  middleChar = "jhikg" 
+  // lrgNumber = [4,16,3]
+
+  ngOnInit(){
+
+    
+     // this.sortArrayAsc(this.sortAc)
+     // this.findMiddleCharacter(this.middleChar)
+     //this.stringReverse(this.strReverse)
+     //this.findLargeNumber(this.lrgNumber)
+     //console.log(this.findMiddleCharacter("Nomsa"))
+      //console.log(this.findMiddleCharacter("Nomusa"))
+      console.log(this.readFile("assets/testfile/test.txt"))
+
+      console.log(this.countNumYear([2013,2014,2000,2010,2022,2013,2021]))
+      
+  }
+
+  sortArrayAsc(arr : any){
+
+    //console.log(arrStr.toString().split(',').sort())
+    //console.log(arrStr.toString().split(',').sort().reverse())
+
+
+    for (let i = 0; i < arr.length; i++) {
+    for (let j = 0; j < arr.length - 1 - i; j++) {
+      // Compare and swap if needed
+      if (arr[j] > arr[j + 1]) {
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+      }
+    }
+  }
+
+  return arr;
+
+  //   let asc = 0;
+  //   let arrAsc  = []
+  //   let index = 1
+  //   arrStr.forEach((char: any) => {
+  //     if(char > asc){
+        
+  //       arrAsc[index] = char
+  //      // asc = arrAsc.push([index => char])
+  //     }
+  //     index ++
+
+  //  // console.log(char);
+  // });
+    
+  }
+
+  findMiddleCharacter(str : string){
+
+      const len = str.length;
+  const middle = Math.floor(len / 2);
+
+    if (len % 2 === 0) {
+      // Even length → return 2 middle characters
+      return str[middle - 1] + str[middle];
+    } else {
+      // Odd length → return the middle character
+      return str[middle];
+    }
+
+   /**
+    * 2. Find the Middle Element
+
+- Test case 1: Find the middle element in a list with 5 nodes (1 -> 2 -> 3 -> 4 -> 5)
+    - Expected output: 3
+- Test case 2: Find the middle element in a list with 6 nodes (1 -> 2 -> 3 -> 4 -> 5 -> 6)
+    - Expected output: 3 or 4 (depending on the implementation)
+- Test case 3: Find the middle element in an empty list
+    - Expected output: None
+    */
+    
+    // let middle = []
+    // let size = middleChar.length
+    // let str1 = ""
+    // let str2 = ""
+
+    //determine string length is odd or even
+    // if(size % 2 == 0){ //even
+    //    let len = (size/2)
+    //    for(let x = 0 ; x < len; x++ ){
+
+    //    }
+
+    //    for(let x = size ; x > len; x-- ){
+        
+    //    }
+
+
+
+
+    // }
+    // else{
+    //   let len = Math.floor(size / 2) + 1
+ 
+    //    for(let x = 0 ; x < len; x++ ){
+    //       str1 += middleChar[x]
+    //    }
+
+
+    //    for(let x = (size - 1) ; x > len ; x-- ){
+    //       str2 += middleChar[x]
+    //       len --
+    //    }
+    // }
+
+
+  }
+
+  stringReverse(strToReverse: string){
+    let reversedString, str
+    reversedString = strToReverse.split("").reverse()
+    str = reversedString.join('')
+    console.log(str)
+
+  }
+
+  findLargeNumber(arrNumber : any){
+    let max = arrNumber[0]; 
+
+      for( let x = 0; x <= arrNumber.length; x++){
+           if (arrNumber[x] > max) {
+                max = arrNumber[x];
+              }
+      }
+    return console.log(max)
+  }
+
+  readFile(path : string){
+    fetch(path)
+     .then(res => {
+        if (!res.ok) throw new Error(`Failed to load file: ${res.statusText}`);
+          return res.text();
+        })
+        .then(data => {
+          const lines = data.split(/\r?\n/);
+          lines.forEach((line, index) => {
+            console.log(`Line ${index + 1}:`, line);
+          });
+      })
+      .catch(err => {
+        console.error(err.message);
+      });
+}
+countNumYear(years : any){
+
+  let ordered = years.sort();
+  return ordered
+
+
+}
+
+
+}
